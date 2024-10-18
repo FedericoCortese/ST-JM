@@ -23,7 +23,7 @@ Y=generate_spatio_temporal_data(M, TT, theta, beta, K,
 D=Y$dist_matrix
 YY=Y$Y.NA
 
-source("Utils_.R")
+# Fit ST-JM
 fit=STjumpDist(YY,3,
                D,
                jump_penalty=.1,
@@ -75,7 +75,7 @@ server <- function(input, output) {
     
     # Create the plot
     ggplot(coords_selected, aes(x = x, y = y, color = Category)) +
-      geom_point(size = 4) +
+      geom_point(size = 8) +
       scale_color_manual(values = c("1" = "lightgreen", "2" = "purple", "3" = "orange")) +
       labs(title = paste("Spatio-Temporal Visualization at Time", input$time),
            x = "X Coordinate", y = "Y Coordinate", color = "State") +
