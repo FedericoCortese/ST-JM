@@ -1,7 +1,9 @@
 # README
 
 ## Overview
-This repository contains code to simulate and analyze spatio-temporal data using the Spatio-Temporal Jump Model (ST-JM). The model efficiently handles spatio-temporal clustering with missing data and incorporates spatial and temporal dependencies between variables. The repository includes two main files:
+This repository contains code to simulate and analyze spatio-temporal data using the Spatio-Temporal Jump Model (ST-JM). The model efficiently handles spatio-temporal clustering with missing data and incorporates spatial and temporal dependencies between variables. 
+For detailed information on the model specification, please refer to the associated paper available [here](https://arxiv.org/pdf/2411.09726).
+The repository includes two main files:
 
 1. **`Utils_.R`**: Contains utility functions for simulating spatio-temporal data, managing missing data, and running the ST-JM.
 2. **`Example.R`**: Provides an example of how to use the ST-JM with simulated data and visualize the results.
