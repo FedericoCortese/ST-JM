@@ -314,6 +314,7 @@ STjumpDist=function(Y,n_states,
   # Initialize modes
   mo <- apply(Ycat,2,Mode)
   # Impute missing values with mean of observed states
+  
   for(i in 1:n_cont){
     Ycont[,i]=ifelse(Mcont[,i],mu[i],Ycont[,i])
   }
@@ -363,12 +364,12 @@ STjumpDist=function(Y,n_states,
       
       # Re-fill-in missings 
       
-      #Ycont <- Mcont * mu[as.vector(t(S)), ] + (!Mcont) * Ycont
+      Ycont <- Mcont * mu[as.vector(t(S)), ] + (!Mcont) * Ycont
       
       
-      for(i in 1:nrow(Mcont)){
-        Ycont[i,]=unlist(ifelse(Mcont[i,],mu[as.vector(t(S))[i],],Ycont[i,]))
-      }
+      # for(i in 1:nrow(Mcont)){
+      #   Ycont[i,]=unlist(ifelse(Mcont[i,],mu[as.vector(t(S))[i],],Ycont[i,]))
+      # }
       for(i in 1:nrow(Mcat)){
         Ycat[i,]=unlist(ifelse(Mcat[i,],mo[as.vector(t(S))[i],],Ycat[i,]))
       }
