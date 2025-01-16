@@ -8,7 +8,7 @@ K=3
 mu=3
 rho=0
 phi=.8
-P=20
+P=10
 Pcat=5
 pGap=.1
 pNAs=0.02
@@ -24,11 +24,14 @@ D=Y$dist_matrix
 YY=Y$Y.NA
 
 # Fit ST-JM
+st=Sys.time()
 fit=STjumpDist(YY,3,
                D,
                jump_penalty=.1,
                spatial_penalty=.05,
                timeflag=T)
+en=Sys.time()
+en-st
 
 # Retrive true state sequence (S_true) and fitted state sequence (S_fit)
 S_true=Y$S[unique(Y$Y.NA$t),]
