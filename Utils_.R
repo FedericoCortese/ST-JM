@@ -362,6 +362,10 @@ STjumpDist=function(Y,n_states,
       loss_v=NULL
       
       # Re-fill-in missings 
+      
+      #Ycont <- Mcont * mu[as.vector(t(S)), ] + (!Mcont) * Ycont
+      
+      
       for(i in 1:nrow(Mcont)){
         Ycont[i,]=unlist(ifelse(Mcont[i,],mu[as.vector(t(S))[i],],Ycont[i,]))
       }

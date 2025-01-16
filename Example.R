@@ -1,7 +1,7 @@
 source("Utils_.R")
 
-M=15
-TT=20
+M=20
+TT=50
 theta=.01
 beta=.9
 K=3
