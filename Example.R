@@ -1,11 +1,11 @@
 source("Utils_.R")
 
-M=20
-TT=50
+M=15
+TT=20
 theta=.01
 beta=.9
 K=3
-mu=1
+mu=3
 rho=0
 phi=.8
 P=20
@@ -34,8 +34,12 @@ fit=STjumpDist(YY,3,
 S_true=Y$S[unique(Y$Y.NA$t),]
 S_fit=fit$best_s
 
+# Order states for comparison
+S_true_vec=order_states_condMean(YY$V6,S_true)
+S_fit_vec=order_states_condMean(YY$V6,S_fit)
+
 # Compute BAC
-BAC_fit=BAC(S_true,S_fit)
+BAC_fit=BAC(S_true_vec,S_fit_vec);BAC_fit
 
 S_fit_df=data.frame(S_fit)
 colnames(S_fit_df)=1:M
@@ -45,7 +49,10 @@ S_fit_df$tt=1:dim(S_fit_df)[1]
 coords=Y$spatial_points
 
 # Dynamic plot of spatio-temporal clustering
-library(shiny)
+
+P <- ncol(S_fit_df) - 2  
+
+# Shiny UI
 ui <- fluidPage(
   titlePanel("Spatio-Temporal Point Visualization"),
   
@@ -55,8 +62,8 @@ ui <- fluidPage(
                   min = min(S_fit_df$tt), 
                   max = max(S_fit_df$tt),
                   value = min(S_fit_df$tt),
-                  step=1,
-                  animate=T)
+                  step = 1,
+                  animate = TRUE)
     ),
     
     mainPanel(
@@ -65,15 +72,19 @@ ui <- fluidPage(
   )
 )
 
+# Shiny Server
 server <- function(input, output) {
   output$spatioPlot <- renderPlot({
-    # Extract the data for the selected time
-    selected_data <- S_fit_df[S_fit_df$t == input$time,1:P]
+    # Estrai i dati per il tempo selezionato
+    selected_data <- S_fit_df[S_fit_df$tt == input$time, 1:P]
     
-    # Combine with coordinates
-    coords_selected <- data.frame(coords, Category = as.factor(unlist(as.vector(selected_data))))
+    # Combina con le coordinate
+    coords_selected <- data.frame(
+      coords, 
+      Category = as.factor(as.vector(t(selected_data)))  # Converte i dati selezionati in un vettore
+    )
     
-    # Create the plot
+    # Crea il grafico
     ggplot(coords_selected, aes(x = x, y = y, color = Category)) +
       geom_point(size = 8) +
       scale_color_manual(values = c("1" = "lightgreen", "2" = "purple", "3" = "orange")) +
@@ -83,7 +94,7 @@ server <- function(input, output) {
   })
 }
 
-# Run the Shiny app
+# Avvia l'app Shiny
 shinyApp(ui = ui, server = server)
 
 # Long format

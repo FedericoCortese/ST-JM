@@ -331,7 +331,7 @@ STjumpDist=function(Y,n_states,
   # State initialization through kmeans++
   S=matrix(0,nrow=TT,ncol=M)
   for(m in 1:M){
-    S[,m]=initialize_states(Y[which(Y$m==m),],n_states)
+    S[,m]=initialize_states(Y[which(Y$m==m),-(1:2)],n_states)
   }
   
   for (init in 1:n_init) {
@@ -427,7 +427,7 @@ STjumpDist=function(Y,n_states,
     }
     
     for(m in 1:M){
-      S[,m]=initialize_states(Y[which(Y$m==m),],n_states)
+      S[,m]=initialize_states(Y[which(Y$m==m),-(1:2)],n_states)
     }
   }
   return(list(best_s=best_s,
